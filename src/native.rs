@@ -2775,6 +2775,13 @@ impl HasContext for Context {
         value
     }
 
+    unsafe fn get_query_parameter_u64(&self, query: Self::Query, parameter: u32) -> u64 {
+        let gl = &self.raw;
+        let mut value = 0;
+        gl.GetQueryObjectui64v(query.0.get(), parameter, &mut value);
+        value
+    }
+
     unsafe fn create_transform_feedback(&self) -> Result<Self::TransformFeedback, String> {
         let gl = &self.raw;
         let mut name = 0;

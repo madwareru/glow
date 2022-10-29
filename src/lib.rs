@@ -1193,6 +1193,8 @@ pub trait HasContext {
 
     unsafe fn get_query_parameter_u32(&self, query: Self::Query, parameter: u32) -> u32;
 
+    unsafe fn get_query_parameter_u64(&self, query: Self::Query, parameter: u32) -> u64;
+
     unsafe fn delete_transform_feedback(&self, transform_feedback: Self::TransformFeedback);
 
     unsafe fn create_transform_feedback(&self) -> Result<Self::TransformFeedback, String>;

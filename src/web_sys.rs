@@ -4111,6 +4111,19 @@ impl HasContext for Context {
         }
     }
 
+    unsafe fn get_query_parameter_u64(&self, query: Self::Query, parameter: u32) -> u64 {
+        let queries = self.queries.borrow();
+        let raw_query = queries.get_unchecked(query);
+        match self.raw {
+            RawRenderingContext::WebGl1(ref _gl) => panic!("Query objects are not supported"),
+            RawRenderingContext::WebGl2(ref gl) => gl
+                .get_query_parameter(raw_query, parameter)
+                .as_f64()
+                .map(|v| v as u64)
+                .unwrap_or(0),
+        }
+    }
+
     unsafe fn create_transform_feedback(&self) -> Result<Self::TransformFeedback, String> {
         let raw_transform_feedback = match self.raw {
             RawRenderingContext::WebGl1(ref _gl) => {
